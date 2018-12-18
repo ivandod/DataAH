@@ -72,9 +72,13 @@ object DataParser {
 
         val rdd_precios = sc.parallelize(List(datos.auc,datos.owner,datos.buyout))
 
+        val rdd_owner = sc.parallelize(datos.owner)
 
         //rdd_precios.collect.foreach(println)
-        
+
+        val prueba = rdd_owner.reduce((x,k) => x + ',' + k)
+
+        println("prueba es: " + prueba)
 
         case class RDD_NUEVO(id: BigInt,owner: String,buyout:BigInt)
         //rdd_precios.map{ case (k,v) => k -> v.toList.sortBy(_.owner)}
