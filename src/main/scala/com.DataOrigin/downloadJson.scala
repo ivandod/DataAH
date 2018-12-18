@@ -14,7 +14,7 @@ object downloadJson {
       fichero.delete()
 
       val src = scala.io.Source.fromURL(url)
-      val out = new java.io.FileWriter("out/"+filename)
+      val out = new java.io.FileWriter("Data/"+filename)
       out.write(src.mkString)
       out.close()
     } catch {

@@ -32,7 +32,7 @@ object DataParser {
 
   def main(args: Array[String]) {
 
-    val listaFicheros = obtenerListaFicheros("out/")
+    val listaFicheros = obtenerListaFicheros("Data/")
 
     for (n <- listaFicheros) {
       println("El directorio out/ : " + n.toString)
@@ -67,7 +67,7 @@ object DataParser {
 
         val rdd_precios = sc.parallelize(List(datos.auc,datos.owner,datos.buyout))
         case class RDD_NUEVO(id: BigInt,owner: String,buyout:BigInt)
-        rdd_precios.map{ case (k,v) => k -> v.toList.sortBy(_.owner)}
+        //rdd_precios.map{ case (k,v) => k -> v.toList.sortBy(_.owner)}
       }
 
     } else {
