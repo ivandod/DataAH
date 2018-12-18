@@ -2,17 +2,22 @@ package com.DataParser
 
 import scala.io.Source
 import java.io.File
+
 import net.liftweb.json._
 import net.liftweb.json.DefaultFormats
-import org.apache.spark.sql.{DataFrame, SQLContext}
+import org.apache.log4j.{Level, Logger}
+import org.apache.spark.sql.SQLContext
+import org.apache.spark.sql.DataFrame
 import org.apache.spark.{SparkConf, SparkContext}
 
 
 object DataParser {
-
+  Logger.getLogger("org").setLevel(Level.ERROR)
   //Una vez descargado el JSON hay que interpretarlo.
-  val conf = new SparkConf().setAppName("DataParser")
+  val conf = new SparkConf().setAppName("DataParser").setMaster("local[*]")
   val sc: SparkContext = new SparkContext(conf)
+  val sqlContext = new SQLContext(sc)
+
 
 
   //Método de obtención de Ficheros
@@ -66,8 +71,15 @@ object DataParser {
         println(s"Apuesta máxima: ${datos.bid.reduce(_ max _)}")
 
         val rdd_precios = sc.parallelize(List(datos.auc,datos.owner,datos.buyout))
+
+
+        //rdd_precios.collect.foreach(println)
+        
+
         case class RDD_NUEVO(id: BigInt,owner: String,buyout:BigInt)
         //rdd_precios.map{ case (k,v) => k -> v.toList.sortBy(_.owner)}
+
+
       }
 
     } else {
